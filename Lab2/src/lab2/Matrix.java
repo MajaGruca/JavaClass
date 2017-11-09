@@ -198,6 +198,65 @@ public class Matrix {
         return norma;
     }
 
+    //////// GRUPA D /////////
+
+    Matrix max(int axis){
+        if(axis==1)
+        {
+            Matrix ret = new Matrix(this.rows,1);
+            for(int i=0;i<this.rows;i++)
+            {
+                double maximum;
+                maximum=this.data[i*this.cols];
+                for(int j=0;j<this.cols;j++)
+                {
+                    if(this.data[i*this.cols+j]>maximum)
+                        maximum=this.data[i*this.cols+j];
+                }
+                ret.data[i]=maximum;
+            }
+            return ret;
+        }
+        if(axis==0)
+        {
+            Matrix ret = new Matrix(1,this.cols);
+            double[][] tab = this.asArray();
+            for(int i=0;i<this.cols;i++)
+            {
+                double maximum;
+                maximum=tab[0][i];
+                for(int j=0;j<this.rows;j++)
+                {
+                    if(tab[j][i]>maximum)
+                        maximum=tab[j][i];
+                }
+                ret.data[i]=maximum;
+            }
+            return ret;
+        }
+        if(axis==-1)
+        {
+            Matrix ret = new Matrix(1,1);
+            double[][] tab = this.asArray();
+            double maximum=tab[0][0];
+            for(int i=0;i<this.rows;i++)
+            {
+                for(int j=0;j<this.cols;j++)
+                {
+                    if(tab[i][j]>maximum)
+                        maximum=tab[i][j];
+                }
+            }
+            ret.data[0]=maximum;
+            return ret;
+        }
+        Matrix ret = new Matrix(0,0);
+        return ret;
+    }
+
+    /////////////////////////
+
+
     public static void main(String[] args) {
 
         double[][] tab1 = {
@@ -211,9 +270,7 @@ public class Matrix {
         };
         Matrix wyk = new Matrix(tab1);
         Matrix wyk1 = new Matrix(tab2);
-        double[][] tabd = wyk.asArray();
-        //wyk.set(1,2,25);
-        System.out.print((wyk.dot(wyk1)).toString());
-    }
 
+        System.out.print((wyk.max(-1)).toString());
+    }
 }
