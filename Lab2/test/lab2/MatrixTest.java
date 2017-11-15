@@ -177,8 +177,13 @@ public class MatrixTest {
     public void dot() throws Exception {
         double[][] tab1 = {{5,10}};
         double[][] tab2 = {{1},{2}};
+        double[][] tab3 = {{3,8,13},{15,7,2}};
+        double[][] tab4 = {{4,22},{6,19},{20,10}};
         Matrix actual1 = new Matrix(tab1);
         Matrix actual2 = new Matrix(tab2);
+        Matrix actual3 = new Matrix(tab3);
+        Matrix actual4 = new Matrix(tab4);
+        //tab1*tab2
         double[][] act1_tab = (actual1.dot(actual2)).asArray();
         double[][] exp1_tab = {{25}};
         for(int i=0;i<actual1.rows;i++)
@@ -188,6 +193,7 @@ public class MatrixTest {
                 assertEquals(exp1_tab[i][j], act1_tab[i][j],1e-5);
             }
         }
+        //tab2*tab1
         double[][] act2_tab = (actual2.dot(actual1)).asArray();
         double[][] exp2_tab = {{5,10},{10,20}};
         for(int i=0;i<actual2.rows;i++)
@@ -195,6 +201,26 @@ public class MatrixTest {
             for(int j=0;j<actual1.cols;j++)
             {
                 assertEquals(exp2_tab[i][j], act2_tab[i][j],1e-5);
+            }
+        }
+        //tab3*tab4
+        double[][] act3_tab = (actual3.dot(actual4)).asArray();
+        double[][] exp3_tab = {{320,348},{142,483}};
+        for(int i=0;i<actual3.rows;i++)
+        {
+            for(int j=0;j<actual4.cols;j++)
+            {
+                assertEquals(exp3_tab[i][j], act3_tab[i][j],1e-5);
+            }
+        }
+        //tab4*tab3
+        double[][] act4_tab = (actual4.dot(actual3)).asArray();
+        double[][] exp4_tab = {{342,186,96},{303,181,116},{210,230,280}};
+        for(int i=0;i<actual4.rows;i++)
+        {
+            for(int j=0;j<actual3.cols;j++)
+            {
+                assertEquals(exp4_tab[i][j], act4_tab[i][j],1e-5);
             }
         }
     }
