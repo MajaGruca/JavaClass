@@ -1,16 +1,20 @@
 package CV;
 
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
+import javax.xml.bind.*;
+import javax.xml.bind.annotation.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@XmlRootElement
 public class Document {
+    @XmlElement(name="title")
     String title;
+    @XmlElement(name="photo")
     Photo photo;
+    @XmlElement(name="section")
     List<Section> sections = new ArrayList<>();
 
+    Document(){}
     Document(String t)
     {
         title=t;
@@ -56,8 +60,37 @@ public class Document {
         }
         out.printf("</body>\n</html>");
     }
-    public static void main(String[] args)
-    {
+
+    public void write(String fileName){
+        try {
+            JAXBContext jc = JAXBContext.newInstance(Document.class);
+            Marshaller m = jc.createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            FileWriter writer= new FileWriter(fileName);;
+            m.marshal(this, writer);
+        } catch (JAXBException ex) {
+            ex.printStackTrace();
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+    public static Document read(String fileName){
+        try {
+            JAXBContext jc = JAXBContext.newInstance(Document.class);
+            Unmarshaller m = jc.createUnmarshaller();
+            FileReader reader = new FileReader(fileName);
+            return (Document) m.unmarshal(reader);
+        } catch (JAXBException ex) {
+            ex.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
         Document cv = new Document("Maja Gruca - CV");
         cv.addPhoto("http://www.dailydogmemes.com/cute-doge.jpg");
         cv.addSection("Wykształcenie")
@@ -66,15 +99,24 @@ public class Document {
                 .addParagraph("...");
         cv.addSection("Umiejętności")
                 .addParagraph(
-                        new ParagraphWithList().setContent("Umiejętności")
+                        new ParagraphWithList().setContent("Jezyki")
                             .addListItem("C")
                             .addListItem("C++")
                             .addListItem("Java")
 
                 );
-        cv.writeHTML(System.out);
+        //cv.writeHTML(System.out);
         try {
             cv.writeHTML(new PrintStream("cv.html","UTF-8"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        cv.write("cv.xml");
+        Document cv2 = Document.read("cv.xml");
+        try {
+            cv2.writeHTML(new PrintStream("cv2.html","UTF-8"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {

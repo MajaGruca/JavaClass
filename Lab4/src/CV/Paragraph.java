@@ -1,8 +1,11 @@
 package CV;
 
+import javax.xml.bind.annotation.*;
 import java.io.PrintStream;
-
+@XmlRootElement
+@XmlSeeAlso({ParagraphWithList.class})
 public class Paragraph{
+    @XmlAttribute
     String content;
 
     Paragraph(){}

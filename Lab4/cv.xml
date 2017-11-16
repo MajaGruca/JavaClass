@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<document>
+    <title>Maja Gruca - CV</title>
+    <photo url="http://www.dailydogmemes.com/cute-doge.jpg"/>
+    <section title="Wykształcenie">
+        <paragraph content="2000-2005 Przedszkole im. Królewny Snieżki w ..."/>
+        <paragraph content="2006-2012 SP7 im Ronalda Regana w ..."/>
+        <paragraph content="..."/>
+    </section>
+    <section title="Umiejętności">
+        <paragraph-with-list content="Jezyki">
+            <list>
+                <item>C</item>
+                <item>C++</item>
+                <item>Java</item>
+            </list>
+        </paragraph-with-list>
+    </section>
+</document>

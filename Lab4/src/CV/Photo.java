@@ -1,9 +1,12 @@
 package CV;
 
+import javax.xml.bind.annotation.*;
 import java.io.PrintStream;
-
+@XmlRootElement
 public class Photo {
+    @XmlAttribute
     String url;
+    Photo(){}
     Photo(String url){
         this.url =url;
     }
