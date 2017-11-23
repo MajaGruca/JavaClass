@@ -228,7 +228,35 @@ public class MatrixTest {
         }
     }
 
+    //////// GRUPA D /////////
 
+    @org.junit.Test
+    public void max() throws Exception{
+        Random random = new Random();
+        int m =random.nextInt(100)+1;
+        int n =random.nextInt(100)+1;
+        double[][] d = new double[m][n];
+        for(int k=0;k<m;k++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                d[k][j]=10*random.nextDouble()-5;
+            }
+        }
+        Matrix ma = new Matrix(d);
+        for(int r = 0; r<m; r++)
+        {
+            Arrays.sort(d[r]);
+        }
+        Matrix mx = ma.max(1);
+        for(int r = 0; r<m; r++)
+        {
+            assertEquals(d[r][n-1], mx.get(r,0),1e-5);
+        }
+
+    }
+
+    /////////////////////////
 
 
     @org.junit.Test
