@@ -1,4 +1,7 @@
 package lab2;
+import java.util.Arrays;
+import java.util.Random;
+
 import static org.junit.Assert.*;
 
 public class MatrixTest {
@@ -10,8 +13,8 @@ public class MatrixTest {
     public void get() throws Exception {
         double[][] tab = {{1,2,5,4,1,65463},{3,4,9}};
         Matrix actual = new Matrix(tab);
-        for(int i=1;i<=tab.length;i++)
-            for(int j=1;j<=tab[i].length;j++)
+        for(int i=0;i<tab.length;i++)
+            for(int j=0;j<tab[i].length;j++)
             {
                 assertEquals(tab[i][j], actual.get(i, j), 1e-5);
             }
@@ -20,8 +23,8 @@ public class MatrixTest {
     @org.junit.Test
     public void set() throws Exception {
         Matrix actual = new Matrix(4,5);
-        for(int i=1;i<=4;i++)
-            for(int j=1;j<=5;j++)
+        for(int i=0;i<4;i++)
+            for(int j=0;j<5;j++)
             {
                 actual.set(i,j,i);
                 assertEquals(i, actual.get(i,j), 1e-5);
@@ -224,6 +227,37 @@ public class MatrixTest {
             }
         }
     }
+
+    //////// GRUPA D /////////
+    
+    @org.junit.Test
+    public void max() throws Exception{
+        Random random = new Random();
+        int m =random.nextInt(100)+1;
+        int n =random.nextInt(100)+1;
+        double[][] d = new double[m][n];
+        for(int k=0;k<m;k++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                d[k][j]=10*random.nextDouble()-5;
+            }
+        }
+        Matrix ma = new Matrix(d);
+        for(int r = 0; r<m; r++)
+        {
+            Arrays.sort(d[r]);
+        }
+        Matrix mx = ma.max(1);
+        for(int r = 0; r<m; r++)
+        {
+            assertEquals(d[r][n-1], mx.get(r,0),1e-5);
+        }
+
+    }
+
+    /////////////////////////
+
 
     @org.junit.Test
     public void frobenius() throws Exception {

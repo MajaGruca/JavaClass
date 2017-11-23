@@ -1,5 +1,7 @@
 package lab2;
 
+import java.util.Random;
+
 public class Matrix {
     double[] data;
     int rows;
@@ -40,11 +42,11 @@ public class Matrix {
     }
 
     double get(int r, int c) {
-        return data[(r - 1) * cols + (c - 1)];
+        return data[(r) * cols + (c)];
     }
 
     void set(int r, int c, double value) {
-        data[(r - 1) * cols + (c - 1)] = value;
+        data[(r) * cols + (c)] = value;
     }
 
     public String toString() {
