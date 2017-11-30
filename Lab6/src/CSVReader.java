@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class CSVReader {
@@ -136,39 +133,32 @@ public class CSVReader {
 
     public static void main(String[] args) throws IOException {
 
-//        CSVReader reader1 = new CSVReader("with-header.csv",";",true);
-//        while(reader1.next()){
-//            int id = reader1.getInt("id");
-//            String name = reader1.get("imi\u0119");
-//            String surname = reader1.get("nazwisko");
-//            String street = reader1.get("ulica");
-//            int num_house = reader1.getInt("nrdomu");
-//            int num_flat = reader1.getInt("nrmieszkania");
+        AdminUnitList ad = new AdminUnitList();
+        ad.read("admin-units.csv");
+        PrintStream out = System.out;
+        ad.list(out,0,100);
+
+//        CSVReader reader2 = new CSVReader("with-header.csv",";",true);
+//        while(reader2.next()){
+//            int id = reader2.getInt(0);
+//            String name = reader2.get(1);
+//            String surname = reader2.get(2);
+//            String street = reader2.get(3);
+//            int num_house = reader2.getInt(4);
+//            int num_flat = reader2.getInt(5);
+//            System.out.printf(Locale.US,"%d %s %s %s %d %d\n",id, name, surname, street, num_house, num_flat);
 //
-//            System.out.printf(Locale.US,"%d %s %s %s %d %d",id, name, surname, street, num_house, num_flat);
 //        }
-
-        CSVReader reader2 = new CSVReader("with-header.csv",";",true);
-        while(reader2.next()){
-            int id = reader2.getInt(0);
-            String name = reader2.get(1);
-            String surname = reader2.get(2);
-            String street = reader2.get(3);
-            int num_house = reader2.getInt(4);
-            int num_flat = reader2.getInt(5);
-            System.out.printf(Locale.US,"%d %s %s %s %d %d\n",id, name, surname, street, num_house, num_flat);
-
-        }
-        reader2 = new CSVReader("no-header.csv",";",false);
-        while(reader2.next()){
-            int id = reader2.getInt(0);
-            String name = reader2.get(1);
-            String surname = reader2.get(2);
-            String street = reader2.get(3);
-            int num_house = reader2.getInt(4);
-            int num_flat = reader2.getInt(5);
-            System.out.printf(Locale.US,"%d %s %s %s %d %d\n",id, name, surname, street, num_house, num_flat);
-
-        }
+//        reader2 = new CSVReader("no-header.csv",";",false);
+//        while(reader2.next()){
+//            int id = reader2.getInt(0);
+//            String name = reader2.get(1);
+//            String surname = reader2.get(2);
+//            String street = reader2.get(3);
+//            int num_house = reader2.getInt(4);
+//            int num_flat = reader2.getInt(5);
+//            System.out.printf(Locale.US,"%d %s %s %s %d %d\n",id, name, surname, street, num_house, num_flat);
+//
+//        }
     }
 }
