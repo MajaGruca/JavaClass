@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class AdminUnit {
     String name;
     int adminLevel;
@@ -6,6 +8,7 @@ public class AdminUnit {
     double density;
     AdminUnit parent;
     BoundingBox bbox = new BoundingBox();
+    List<AdminUnit> children;
 
     AdminUnit(){
         name="";
@@ -13,10 +16,11 @@ public class AdminUnit {
         population=0;
         area=0;
         density=0;
+        parent=null;
     }
 
     public String toString(){
-        String s= "\nnazwa:"+name+"\ntyp jednostki :"+adminLevel+"\npopulacja: "+population+"\npowierzchnia :"+area+"\nzageszczenie: "+density;
+        String s= "nazwa:"+name+"\ntyp jednostki :"+adminLevel+"\npopulacja: "+population+"\npowierzchnia :"+area+"\nzageszczenie: "+density+"\n\n";
         return s;
     }
 

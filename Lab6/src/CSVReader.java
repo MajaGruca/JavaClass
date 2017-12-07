@@ -135,8 +135,8 @@ public class CSVReader {
 
         AdminUnitList ad = new AdminUnitList();
         ad.read("admin-units.csv");
-        PrintStream out = System.out;
-        ad.list(out,0,100);
+        PrintStream out = new PrintStream("cos.txt");
+        ad.list(out,14480,25);
 
 //        CSVReader reader2 = new CSVReader("with-header.csv",";",true);
 //        while(reader2.next()){
