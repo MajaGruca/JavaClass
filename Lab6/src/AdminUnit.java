@@ -20,8 +20,22 @@ public class AdminUnit {
     }
 
     public String toString(){
-        String s= "nazwa:"+name+"\ntyp jednostki :"+adminLevel+"\npopulacja: "+population+"\npowierzchnia :"+area+"\nzageszczenie: "+density+"\n\n";
+        String s= "nazwa: "+name+"\ntyp jednostki: "+adminLevel+"\npopulacja: "+population+"\npowierzchnia: "+area+"\nzageszczenie: "+density+"\nbbox:\n"+bbox.toString()+"\n\n";
         return s;
+    }
+
+    void fixMissingValues(){
+        if(density==0 && parent!=null)
+        {
+            if(parent.density!=0)
+                density = parent.density;
+            else
+                parent.fixMissingValues();
+        }
+        if(population==0)
+        {
+            population=area*density;
+        }
     }
 
 }

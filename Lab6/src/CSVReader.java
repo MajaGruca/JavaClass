@@ -61,18 +61,16 @@ public class CSVReader {
     }
 
     boolean isMissing(int columnIndex){
-        if(current[columnIndex].length()==0)
+        if(columnIndex>=current.length || current[columnIndex].isEmpty())
             return true;
         else
             return false;
     }
 
     boolean isMissing(String columnLabel){
-        int index = columnLabels.indexOf(columnLabel);
-        if(current[index].length()==0)
+        if(!columnLabelsToInt.containsKey(columnLabel))
             return true;
-        else
-            return false;
+        return isMissing(columnLabelsToInt.get(columnLabel));
     }
 
     String get(int columnIndex){
@@ -135,30 +133,7 @@ public class CSVReader {
 
         AdminUnitList ad = new AdminUnitList();
         ad.read("admin-units.csv");
-        PrintStream out = new PrintStream("cos.txt");
-        ad.list(out,14480,25);
-
-//        CSVReader reader2 = new CSVReader("with-header.csv",";",true);
-//        while(reader2.next()){
-//            int id = reader2.getInt(0);
-//            String name = reader2.get(1);
-//            String surname = reader2.get(2);
-//            String street = reader2.get(3);
-//            int num_house = reader2.getInt(4);
-//            int num_flat = reader2.getInt(5);
-//            System.out.printf(Locale.US,"%d %s %s %s %d %d\n",id, name, surname, street, num_house, num_flat);
-//
-//        }
-//        reader2 = new CSVReader("no-header.csv",";",false);
-//        while(reader2.next()){
-//            int id = reader2.getInt(0);
-//            String name = reader2.get(1);
-//            String surname = reader2.get(2);
-//            String street = reader2.get(3);
-//            int num_house = reader2.getInt(4);
-//            int num_flat = reader2.getInt(5);
-//            System.out.printf(Locale.US,"%d %s %s %s %d %d\n",id, name, surname, street, num_house, num_flat);
-//
-//        }
+        PrintStream out = System.out;
+        ad.list(out,0,100);
     }
 }
