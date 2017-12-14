@@ -134,6 +134,7 @@ public class CSVReader {
         AdminUnitList ad = new AdminUnitList();
         ad.read("admin-units.csv");
         PrintStream out = System.out;
+        ad.sortInplaceByArea();
         ad.list(out,0,100);
     }
 }

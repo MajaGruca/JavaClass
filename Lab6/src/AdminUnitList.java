@@ -1,11 +1,8 @@
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class AdminUnitList {
+public class AdminUnitList{
     List<AdminUnit> units = new ArrayList<>();
     Map<Long,AdminUnit> id_list = new HashMap<>();
 
@@ -52,6 +49,37 @@ public class AdminUnitList {
             }
         }
         return nbs;
+    }
+
+    AdminUnitList sortInplaceByName(){
+        class CompareByName implements Comparator<AdminUnit> {
+            @Override
+            public int compare(AdminUnit t, AdminUnit t1) {
+                    return t.name.compareTo(t1.name);
+            }
+
+        }
+        CompareByName comp = new CompareByName();
+        this.units.sort(comp);
+
+        return this;
+    }
+
+    AdminUnitList sortInplaceByArea(){
+        Comparator<AdminUnit> comp = new Comparator<AdminUnit>() {
+            @Override
+            public int compare(AdminUnit t, AdminUnit t1) {
+                if(t.area>t1.area)
+                    return 1;
+                if(t.area<t1.area)
+                    return -1;
+                if(t.area==t1.area)
+                    return 0;
+                return -2;
+            }
+        };
+        this.units.sort(comp);
+        return this;
     }
 
     public void read(String filename) throws IOException {
