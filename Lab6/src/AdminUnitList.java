@@ -22,13 +22,20 @@ public class AdminUnitList{
 
     AdminUnitList selectByName(String pattern, boolean regex){
         AdminUnitList ret = new AdminUnitList();
-        regex=false;
-        for(AdminUnit element: units)
-            if(element.name.contains(pattern))
-            {
-                regex=true;
-                ret.units.add(element);
+        if(regex) {
+            for (AdminUnit element : units) {
+                if (element.name.contains(pattern)) {
+                    ret.units.add(element);
+                }
             }
+        }
+        else{
+            for (AdminUnit element : units) {
+                if (element.name.matches(pattern)) {
+                    ret.units.add(element);
+                }
+            }
+        }
         return ret;
     }
 
