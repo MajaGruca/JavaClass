@@ -30,7 +30,6 @@ public class CSVReader {
     }
 
     boolean next() throws IOException {
-
         String line = reader.readLine();
         if (line == null) {
             return false;
@@ -131,10 +130,15 @@ public class CSVReader {
 
     public static void main(String[] args) throws IOException {
 
-        AdminUnitList ad = new AdminUnitList();
-        ad.read("admin-units.csv");
+        AdminUnitList list = new AdminUnitList();
+        list.read("admin-units.csv");
         PrintStream out = System.out;
-        ad.sortInplaceByArea();
-        ad.list(out,0,100);
+        AdminUnitQuery query = new AdminUnitQuery()
+                .selectFrom(list)
+                .where(a->a.area>1000)
+                .or(a->a.name.startsWith("Sz"))
+                .sort((a,b)->Double.compare(a.area,b.area))
+                .limit(100);
+        query.execute().list(out);
     }
 }

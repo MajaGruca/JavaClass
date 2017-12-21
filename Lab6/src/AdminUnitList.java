@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class AdminUnitList{
     List<AdminUnit> units = new ArrayList<>();
@@ -21,13 +22,20 @@ public class AdminUnitList{
 
     AdminUnitList selectByName(String pattern, boolean regex){
         AdminUnitList ret = new AdminUnitList();
-        regex=false;
-        for(AdminUnit element: units)
-            if(element.name.matches(pattern))
-            {
-                regex=true;
-                ret.units.add(element);
+        if(regex) {
+            for (AdminUnit element : units) {
+                if (element.name.contains(pattern)) {
+                    ret.units.add(element);
+                }
             }
+        }
+        else{
+            for (AdminUnit element : units) {
+                if (element.name.matches(pattern)) {
+                    ret.units.add(element);
+                }
+            }
+        }
         return ret;
     }
 
@@ -65,21 +73,86 @@ public class AdminUnitList{
         return this;
     }
 
+
     AdminUnitList sortInplaceByArea(){
         Comparator<AdminUnit> comp = new Comparator<AdminUnit>() {
             @Override
-            public int compare(AdminUnit t, AdminUnit t1) {
-                if(t.area>t1.area)
-                    return 1;
-                if(t.area<t1.area)
-                    return -1;
-                if(t.area==t1.area)
-                    return 0;
-                return -2;
-            }
+            public int compare(AdminUnit t, AdminUnit t1) { return Double.compare(t.area,t1.area); }
         };
         this.units.sort(comp);
         return this;
+    }
+
+    AdminUnitList sortInplaceByPopulation(){
+        this.units.sort((t,t1)->Double.compare(t.population,t1.population));
+        return this;
+    }
+
+    AdminUnitList sortInplace(Comparator<AdminUnit> cmp){
+        this.units.sort(cmp);
+        return this;
+    }
+
+    AdminUnitList sort(Comparator<AdminUnit> cmp){
+        AdminUnitList sorted = new AdminUnitList();
+        for(AdminUnit n: this.units)
+        {
+            AdminUnit ad = new AdminUnit();
+            ad=n;
+            sorted.units.add(ad);
+        }
+        sorted.sortInplace(cmp);
+        return sorted;
+    }
+
+    interface AdUnTester{
+        boolean check(AdminUnit p);
+    }
+
+    AdminUnitList filter(Predicate<AdminUnit> pred){
+        AdminUnitList ad = new AdminUnitList();
+        for(AdminUnit n: this.units)
+        {
+            if(pred.test(n))
+                ad.units.add(n);
+        }
+        return ad;
+    }
+
+    AdminUnitList filter(Predicate<AdminUnit> pred, int limit){
+        int i=0;
+        AdminUnitList ad = new AdminUnitList();
+        for(AdminUnit n: this.units)
+        {
+            if(pred.test(n))
+            {
+                ad.units.add(n);
+                i++;
+            }
+            if(i==limit)
+                break;
+        }
+        return ad;
+    }
+
+    AdminUnitList filter(Predicate<AdminUnit> pred, int offset, int limit){
+        int i=0;
+        AdminUnitList ad = new AdminUnitList();
+        for(AdminUnit n: this.units)
+        {
+            if(pred.test(n))
+            {
+                if(i<offset)
+                    i++;
+                else {
+                    ad.units.add(n);
+                    i++;
+                }
+            }
+            if(i==limit)
+                break;
+        }
+        return ad;
     }
 
     public void read(String filename) throws IOException {
