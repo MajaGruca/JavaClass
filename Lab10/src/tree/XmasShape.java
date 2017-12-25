@@ -1,4 +1,4 @@
-package com.company;
+package tree;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
