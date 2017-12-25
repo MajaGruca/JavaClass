@@ -25,14 +25,14 @@ public class DrawPanel extends JPanel {
     }
 
     DrawPanel(){
-        int RootX=300;
+        int RootX=500;
         int RootY=400;
         int i=0;
         setBackground(new Color(0,55,85));
         Random gen = new Random();
         Star star = new Star(gen.nextInt(1000), gen.nextInt(800), gen.nextDouble());
         addStar(star);
-        while(i<50) {
+        while(i<60) {
             star = new Star(gen.nextInt(1000), gen.nextInt(800), gen.nextDouble());
             addStar(star);
             i++;
