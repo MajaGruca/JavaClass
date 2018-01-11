@@ -11,7 +11,6 @@ public class DownloadExample {
 
     public static void main(String[] args)
     {
-        sequentialDownload();
         concurrentDownload2();
     }
     // lista plików do pobrania
