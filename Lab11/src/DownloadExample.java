@@ -41,7 +41,8 @@ public class DownloadExample {
     static void concurrentDownload(){
         double t1 = System.nanoTime()/1e6;
         for(String url:toDownload){
-            new Downloader(url).run();
+            (new Thread(new Downloader(url))).start();
+            Thread.yield();
         }
         double t2 = System.nanoTime()/1e6;
         System.out.printf(Locale.US,"t2-t1=%f\n",t2-t1);
@@ -50,9 +51,9 @@ public class DownloadExample {
     static void concurrentDownload2(){
         double t1 = System.nanoTime()/1e6;
         while(count!=toDownload.length){
-
-            new Downloader(toDownload[count]).run();
+            (new Thread(new Downloader(toDownload[count]))).start();
             Thread.yield();
+            count++;
         }
         double t2 = System.nanoTime()/1e6;
         System.out.printf(Locale.US,"t2-t1=%f\n",t2-t1);
