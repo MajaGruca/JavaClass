@@ -1,44 +1,40 @@
+package Zad2;
+
 import java.util.Locale;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-public class Mean {
-    static double[] array;
-    static BlockingQueue<Double> results = new ArrayBlockingQueue<Double>(100);
+public class Revert {
+    static int[] array;
+    static BlockingQueue<Integer> results = new ArrayBlockingQueue<Integer>(100);
     static void initArray(int size){
-        array = new double[size];
+        array = new int[size];
         for(int i=0;i<size;i++){
-            array[i]= Math.random()*size/(i+1);
+            array[i]= i;
         }
     }
 
     public static void main(String[] args) throws InterruptedException {
-        initArray(128000000);
+        initArray(100000000);
+        OdwracanieRown(4);
     }
 
 
     static class Odwracanie extends Thread{
         private final int start;
         private final int end;
-        double mean = 0;
 
         Odwracanie(int start, int end){
             this.start = start;
             this.end=end;
         }
         public void run(){
-            double sum=0;
-            for(int i = start;i<end;i++)
+            for(int i = 0;i<(end-start)/2;i++)
             {
-                sum+=array[i];
+                int temp = array[start+i];
+                array[start+i]=array[end-1-i];
+                array[end-1-i]=temp;
             }
-            mean = sum/(end-start);
-            try {
-                results.put(mean);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.printf(Locale.US,"%d-%d mean=%f\n",start,end,mean);
         }
 
 
@@ -57,18 +53,13 @@ public class Mean {
             mc.start();
         }
         double t2 = System.nanoTime()/1e6;
-        double mean = 0;
-        for(int i=0;i<cnt;i++) {
-            mean+=results.take();
-        }
-        mean=mean/cnt;
+        //results.take();
         double t3 = System.nanoTime()/1e6;
-        System.out.printf(Locale.US,"size = %d cnt=%d >  t2-t1=%f t3-t1=%f mean=%f\n",
+        System.out.printf(Locale.US,"size = %d cnt=%d >  t2-t1=%f t3-t1=%f\n",
                 array.length,
                 cnt,
                 t2-t1,
-                t3-t1,
-                mean);
+                t3-t1);
     }
 
 }
